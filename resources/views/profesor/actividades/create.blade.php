@@ -1,0 +1,63 @@
+@extends('adminlte::page')
+@section('title', 'Nueva Actividad')
+@section('content_header')
+    <h1>Nueva Actividad</h1>
+@stop
+
+@section('content')
+    <div class="card">
+        <div class="card-body">
+        {!! Form::open(['route' => 'profesor.actividades.store', 'enctype'=>'multipart/form-data']) !!}
+
+        @csrf
+
+
+        <div class="form-group">
+            {!! Form::label('id_tema', 'Tema:') !!}
+            {!! Form::select('id_tema', $tema, null, ['class' => 'form-control']) !!}
+            @error('id_tema')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+            <div class="form group">
+                {!! Form::label('nombre', 'Nombre:') !!}
+                {!! Form::text('nombre', null, ['class' => 'form-control', 'placeholder' => 'Nombre Actividad']) !!}
+                @error('nombre')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form group">
+                {!! Form::label('enlace', 'Enlace:') !!}
+                {!! Form::URL('enlace', null, ['class' => 'form-control', 'placeholder' => 'Link de la actividad']) !!}
+                @error('enlace')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+            {!! Form::hidden('id_user',Auth::user()->id, null,[ 'class' => 'form-control']) !!}
+
+            <div class="form group">
+                {!! Form::label('estado_acti', 'Estado:') !!}
+                {!! Form::select('estado_acti', [null => 'SELECCIONE ESTADO','0' => ' NO DISPONIBLE', '1' => 'DISPONIBLE'], null, [
+                    'class' => 'form-control',
+                ]) !!}
+                @error('estado_acti')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            {!! Form::hidden('id_curso',Auth::user()->curso->id,null, ['class' => 'form-control']) !!}
+
+
+            <br>
+            <center>
+                {!! Form::submit('GUARDAR ACTIVIDAD', ['class' => 'btn btn-primary']) !!}
+                {!! Form::close() !!}
+            </center>
+
+        </div>
+        <center> <iframe width="795" height="690" frameborder="0" src="https://es.educaplay.com/"></iframe>
+        </center>
+    </div>
+@stop
